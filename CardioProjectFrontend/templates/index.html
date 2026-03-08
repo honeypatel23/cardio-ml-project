@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioPredict | ML Health Assessment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Cardiovascular Risk Assessment</h1>
+            <p class="subtitle">Enter your health metrics for an AI-powered prediction</p>
+        </div>
+
+        <form action="/predict" method="POST" id="predictForm">
+            <!-- Hidden field to calculate age in days before submission -->
+            <input type="hidden" name="age_days" id="age_days">
+
+            <div class="form-grid">
+                
+                <div class="input-group">
+                    <label for="age_years">Age (Years)</label>
+                    <input type="number" id="age_years" placeholder="e.g. 55" min="20" max="100" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="gender">Gender</label>
+                    <select name="gender" id="gender" required>
+                        <option value="" disabled selected>Select Gender</option>
+                        <option value="0">Female</option>
+                        <option value="1">Male</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="height">Height (cm)</label>
+                    <input type="number" name="height" id="height" placeholder="e.g. 170" min="100" max="250" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="weight">Weight (kg)</label>
+                    <input type="number" name="weight" id="weight" placeholder="e.g. 70" step="0.1" min="30" max="250" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="ap_hi">Systolic Blood Pressure</label>
+                    <input type="number" name="ap_hi" id="ap_hi" placeholder="e.g. 120" min="50" max="250" required title="Normal is typically around 120">
+                </div>
+
+                <div class="input-group">
+                    <label for="ap_lo">Diastolic Blood Pressure</label>
+                    <input type="number" name="ap_lo" id="ap_lo" placeholder="e.g. 80" min="30" max="150" required title="Normal is typically around 80">
+                </div>
+
+                <div class="input-group">
+                    <label for="cholesterol">Cholesterol Level</label>
+                    <select name="cholesterol" id="cholesterol" required>
+                        <option value="" disabled selected>Select Level</option>
+                        <option value="1">Normal</option>
+                        <option value="2">Above Normal</option>
+                        <option value="3">Well Above Normal</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="gluc">Glucose Level</label>
+                    <select name="gluc" id="gluc" required>
+                        <option value="" disabled selected>Select Level</option>
+                        <option value="1">Normal</option>
+                        <option value="2">Above Normal</option>
+                        <option value="3">Well Above Normal</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="smoke">Do you smoke?</label>
+                    <select name="smoke" id="smoke" required>
+                        <option value="" disabled selected>Select Option</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="alco">Do you consume alcohol?</label>
+                    <select name="alco" id="alco" required>
+                        <option value="" disabled selected>Select Option</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="active">Are you physically active?</label>
+                    <select name="active" id="active" required>
+                        <option value="" disabled selected>Select Option</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="input-group full-width">
+                    <button type="submit" class="submit-btn">Predict Health Risk</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('predictForm').addEventListener('submit', function(e) {
+            // Calculate age in days (Dataset was collected using age in days)
+            const ageYears = document.getElementById('age_years').value;
+            if(ageYears) {
+                // Approximate conversion to match dataset (leap years included generally)
+                document.getElementById('age_days').value = parseInt(ageYears) * 365.25;
+            }
+        });
+    </script>
+</body>
+</html>

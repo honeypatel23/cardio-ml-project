@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result | CardioPredict</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Assessment Complete</h1>
+        </div>
+
+        <div class="result-card">
+            
+            {% if "High Risk" in prediction_text %}
+                <div class="result-icon">⚠️</div>
+                <h2 class="result-title result-high">Attention Required</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">{{ prediction_text }}</p>
+                <p style="color: #94a3b8; margin-bottom: 2rem;">Please consult with a healthcare professional for a comprehensive evaluation.</p>
+            {% elif "Low Risk" in prediction_text %}
+                <div class="result-icon">✅</div>
+                <h2 class="result-title result-low">Looking Good</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">{{ prediction_text }}</p>
+                <p style="color: #94a3b8; margin-bottom: 2rem;">Keep up the healthy lifestyle!</p>
+            {% else %}
+                <div class="result-icon">❓</div>
+                <h2 class="result-title error-text">Could not process</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #fbbf24;">{{ prediction_text }}</p>
+            {% endif %}
+
+            <a href="/" style="text-decoration: none;">
+                <button class="submit-btn" style="width: auto;">← Make Another Prediction</button>
+            </a>
+            
+        </div>
+    </div>
+
+</body>
+</html>
